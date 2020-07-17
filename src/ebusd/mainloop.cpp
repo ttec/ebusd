@@ -1634,10 +1634,10 @@ result_t MainLoop::executeSuggest(const vector<string>& args, ostringstream* ost
     SlaveSymbolString slaveSymbolString;
     slaveSymbolString.parseHex(slaveHexString);
 
-    map<uint64_t, GrabbedMessage> messageMap;
-    messageMap[0].setLastData(masterSymbolString, slaveSymbolString);
+    GrabbedMessage grabbedMessage;
+    grabbedMessage.setLastData(masterSymbolString, slaveSymbolString);
 
-    messageMap[0].dump(true, messageMap, true, true, ostream);
+    grabbedMessage.dump(true, null, true, true, ostream);
 
     return RESULT_OK;
   }

@@ -252,7 +252,10 @@ bool decodeType(const DataType* type, const SymbolString& input, size_t length,
 
 bool GrabbedMessage::dump(bool unknown, MessageMap* messages, bool first, bool decode, ostringstream* output,
     bool isDirectMode) const {
-  Message* message = messages->find(m_lastMaster);
+   Message* message = nullptr;
+   if(messages != nullptr) {
+     message = messages->find(m_lastMaster);
+   }
   if (unknown && message) {
     return false;
   }
