@@ -28,6 +28,7 @@
 #include "lib/utils/log.h"
 #include "lib/utils/httpclient.h"
 #include "lib/ebus/data.h"
+#include <map>
 
 namespace ebusd {
 
@@ -591,6 +592,9 @@ result_t MainLoop::decodeMessage(const string &data, bool isHttp, bool* connecte
   }
   if (cmd == "G" || cmd == "GRAB") {
     return executeGrab(args, ostream);
+  }
+  if (cmd == "SUGGEST") {
+    return executeSuggest(args, ostream);
   }
   if (cmd == "DEFINE") {
     if (m_newlyDefinedMessages) {
@@ -1612,6 +1616,35 @@ result_t MainLoop::executeGrab(const vector<string>& args, ostringstream* ostrea
   *ostream << "usage: grab [stop]\n"
               "  or:  grab result [all|decode]\n"
               " Start or stop grabbing, or report/decode unknown or all grabbed messages.";
+  return RESULT_OK;
+}
+
+result_t MainLoop::executeSuggest(const vector<string>& args, ostringstream* ostream) {
+  if (args.size() == 2) {
+    string hexString(args[1]);
+    std::replace( hexString.begin(), hexString.end(), ' ', ''); // replace all remove all spaces
+
+    auto delimiterIndex = s.find('/');
+
+    auto masterHexString = hexString.substr(0, delimiterIndex);
+    auto slaveHexString = hexString.substr(delimiterIndex, hexString.length());
+
+    MasterSymbolString masterSymbolString;
+    masterSymbolString.parseHex(masterHexString);
+
+    SlaveSymbolString slaveSymbolString;
+    slaveSymbolString.parseHex(slaveHexString);
+
+    map<uint64_t, GrabbedMessage> messageMap;
+    messageMap[0].setLastData(masterSymbolString, slaveSymbolString);
+
+    messageMap[0].dump(true, messageMap, true, true, ostream);
+
+    return RESULT_OK;
+  }
+  
+  *ostream << "usage: suggest HEX\n"
+              " Decodes the given HEX in the same way as 'grap result decode' does.";
   return RESULT_OK;
 }
 

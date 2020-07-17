@@ -260,6 +260,14 @@ class MainLoop : public Thread, DeviceListener {
    */
   result_t executeGrab(const vector<string>& args, ostringstream* ostream);
 
+    /**
+   * Execute the suggest.
+   * @param args the arguments passed to the command (starting with the command itself), or empty for help.
+   * @param ostream the @a ostringstream to format the result string to.
+   * @return the result code.
+   */
+  result_t executeSuggest(const vector<string>& args, ostringstream* ostream);
+
   /**
    * Execute the define command.
    * @param args the arguments passed to the command (starting with the command itself), or empty for help.
