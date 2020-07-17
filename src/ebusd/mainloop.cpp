@@ -1622,12 +1622,11 @@ result_t MainLoop::executeGrab(const vector<string>& args, ostringstream* ostrea
 result_t MainLoop::executeSuggest(const vector<string>& args, ostringstream* ostream) {
   if (args.size() == 2) {
     string hexString(args[1]);
-    std::replace( hexString.begin(), hexString.end(), ' ', ''); // replace all remove all spaces
 
     auto delimiterIndex = s.find('/');
 
-    auto masterHexString = hexString.substr(0, delimiterIndex);
-    auto slaveHexString = hexString.substr(delimiterIndex, hexString.length());
+    auto masterHexString = trim(hexString.substr(0, delimiterIndex));
+    auto slaveHexString = trim(hexString.substr(delimiterIndex, hexString.length()));
 
     MasterSymbolString masterSymbolString;
     masterSymbolString.parseHex(masterHexString);

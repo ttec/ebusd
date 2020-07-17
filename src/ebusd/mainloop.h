@@ -451,6 +451,18 @@ class MainLoop : public Thread, DeviceListener {
 
   /** the result of the last update check, or empty. */
   string m_updateCheck;
+
+
+  string trim(const string& str)
+  {
+      size_t first = str.find_first_not_of(' ');
+      if (string::npos == first)
+      {
+          return str;
+      }
+      size_t last = str.find_last_not_of(' ');
+      return str.substr(first, (last - first + 1));
+  }
 };
 
 }  // namespace ebusd
