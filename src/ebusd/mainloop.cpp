@@ -1637,7 +1637,7 @@ result_t MainLoop::executeSuggest(const vector<string>& args, ostringstream* ost
     GrabbedMessage grabbedMessage;
     grabbedMessage.setLastData(masterSymbolString, slaveSymbolString);
 
-    grabbedMessage.dump(true, null, true, true, ostream);
+    grabbedMessage.dump(true, nullptr, true, true, ostream);
 
     return RESULT_OK;
   }
