@@ -1623,7 +1623,7 @@ result_t MainLoop::executeSuggest(const vector<string>& args, ostringstream* ost
   if (args.size() == 2) {
     string hexString(args[1]);
 
-    auto delimiterIndex = s.find('/');
+    auto delimiterIndex = hexString.find('/');
 
     auto masterHexString = trim(hexString.substr(0, delimiterIndex));
     auto slaveHexString = trim(hexString.substr(delimiterIndex, hexString.length()));
