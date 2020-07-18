@@ -1004,10 +1004,12 @@ result_t loadConfigFiles(MessageMap* messages, bool verbose, bool denyRecursive)
 }
 
 result_t loadScanConfigFile(MessageMap* messages, symbol_t address, bool verbose, string* relativeFile) {
+  logInfo(lf_main, "try to read csv files for %2.2x", address);
   Message* message = messages->getScanMessage(address);
   if (!message || message->getLastUpdateTime() == 0) {
     return RESULT_ERR_NOTFOUND;
   }
+  logInfo(lf_main, "try to read csv files for %2.2x after getScanMessage", address);
   const SlaveSymbolString& data = message->getLastSlaveData();
   if (data.getDataSize() < 1+5+2+2) {
     logError(lf_main, "unable to load scan config %2.2x: slave part too short (%d)", address, data.getDataSize());
